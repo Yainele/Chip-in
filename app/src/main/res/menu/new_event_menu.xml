@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Уведомить всех"
+        android:id="@+id/Notify_item"
+        android:icon="@drawable/ic_baseline_notifications_24"
+
+        />
+
+    <item
+        android:title="Разделить на всех"
+        android:id="@+id/totalAmount_item"
+        android:icon="@drawable/ic_round_groups_24"
+        />
+
+</menu>

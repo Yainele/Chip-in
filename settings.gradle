@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Chip in v.01"
