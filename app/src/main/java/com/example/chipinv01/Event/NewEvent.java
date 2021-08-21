@@ -81,6 +81,12 @@ public class NewEvent extends AppCompatActivity {
             Toast.makeText(NewEvent.this, "список контактов пуст", Toast.LENGTH_SHORT).show();
         }
         eventAdapter.setChoosenContacts(ContactsArray);
+         eventAdapter.SetOnItemClickListener(new EventAdapter.OnItemClickListener() {
+             @Override
+             public void OnItemClick(int position) {
+
+             }
+         });
          /*
           MySwipeHelper swipeHelper = new MySwipeHelper(this, choosenContactsList,300) {
             @Override
@@ -288,5 +294,4 @@ Button.setOnClickListener(new View.OnClickListener() {
             }
         }
     }
-
 }

@@ -35,12 +35,9 @@ public class Homepage extends AppCompatActivity {
                         case R.id.item1:
                             selectedFragment = new HomeFragment();
                             break;
-
-
                         case R.id.item2:
                             selectedFragment = new NewRecordFragment();
                             break;
-
                         case R.id.item3:
                             selectedFragment = new ProfileFragment();
                             break;
