@@ -88,6 +88,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        initHomePageAdapter(view);
+
+        return view;
+
+    }
+    public void initHomePageAdapter(View view){
+        //объект используется для тестов адаптера после подключения адаптера к базе данных удалить
         Credit credit = new Credit();
         credit.setCreditName("пусто");
         credit.setCreditTime("99999");
@@ -96,16 +104,9 @@ public class HomeFragment extends Fragment {
         credit.setMemberAmount("0/0");
         credit.setFullamount("9999999");
         ArrayList<Credit>Credits = new ArrayList<>();
-
-
-
         Credits.add(credit);
-        firebaseFirestore.collection("cities").document("new-city-id").set(credit);
-
-        FirestoreRecyclerOptions<Credit> options =
-                new FirestoreRecyclerOptions.Builder<Credit>()
-                        .setQuery(queryChart, Credit.class)
-                        .build();
+        firebaseFirestore.collection("UserID").document(credit.getCreditName()).set(credit);
+        ////////////////
 
 
         homepageRecycle = view.findViewById(R.id.chipsResycle);
@@ -115,12 +116,14 @@ public class HomeFragment extends Fragment {
         homepageRecycleAdapter = new homePageAdapter(Credits);
 
         homepageRecycle.setAdapter(homepageRecycleAdapter);
-        //homepageRecycleAdapter.setCredits(Credits);
 
-
-
-        return view;
-
+    }
+    public void getDataFromFirebase(){
+        FirestoreRecyclerOptions<Credit> options =
+                new FirestoreRecyclerOptions.Builder<Credit>()
+                        .setQuery(queryChart, Credit.class)
+                        .build();
+    //закончить после добавления регистрации
     }
 
     public void OnItemClickListener(View view, int position) {
