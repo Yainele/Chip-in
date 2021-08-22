@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "514196946302",
+    "project_id": "chip-in-d25f4",
+    "storage_bucket": "chip-in-d25f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514196946302:android:9ff3c71c7392f3df3e872f",
+        "android_client_info": {
+          "package_name": "com.example.chipinv01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514196946302-6fc1foluhd27f23r6qeok0b9gs886992.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chipinv01",
+            "certificate_hash": "c763577cd26153e09448a8c48693aaecdae41e5e"
+          }
+        },
+        {
+          "client_id": "514196946302-mlbntt085uiqdnrq2dor79pgdhie20n0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgcGpdXeGzIqajcFSlcMq5G_9izD1tHm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514196946302-mlbntt085uiqdnrq2dor79pgdhie20n0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

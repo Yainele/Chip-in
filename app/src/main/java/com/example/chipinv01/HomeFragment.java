@@ -1,12 +1,32 @@
 package com.example.chipinv01;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.chipinv01.Event.Credit;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import recycleViewAdapters.homePageAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +34,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    RecyclerView homepageRecycle;
+    FirebaseUser userKey = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    Query queryChart = firebaseFirestore.collection("some");
+    homePageAdapter homepageRecycleAdapter;
+    Drawable defaultImage;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,13 +80,52 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        Credit credit = new Credit();
+        credit.setCreditName("пусто");
+        credit.setCreditTime("99999");
+        credit.setDeadline("30.02.2042");
+        credit.setCreditorName("пусто");
+        credit.setMemberAmount("0/0");
+        credit.setFullamount("9999999");
+        ArrayList<Credit>Credits = new ArrayList<>();
+
+
+
+        Credits.add(credit);
+        firebaseFirestore.collection("cities").document("new-city-id").set(credit);
+
+        FirestoreRecyclerOptions<Credit> options =
+                new FirestoreRecyclerOptions.Builder<Credit>()
+                        .setQuery(queryChart, Credit.class)
+                        .build();
+
+
+        homepageRecycle = view.findViewById(R.id.chipsResycle);
+        homepageRecycle.setHasFixedSize(true);
+        homepageRecycle.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        homepageRecycleAdapter = new homePageAdapter(Credits);
+
+        homepageRecycle.setAdapter(homepageRecycleAdapter);
+        //homepageRecycleAdapter.setCredits(Credits);
+
+
+
+        return view;
+
+    }
+
+    public void OnItemClickListener(View view, int position) {
+    }
+    public void OnItemLongClickListener(View view, int position) {
 
     }
 }

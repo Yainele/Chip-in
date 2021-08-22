@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Objects;
 
 public class Homepage extends AppCompatActivity {
 
@@ -15,7 +18,7 @@ public class Homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homegage);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         //
 
         //Bottom nav
@@ -25,30 +28,27 @@ public class Homepage extends AppCompatActivity {
 
     }
     //Listener Nav Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new
-            BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
+    @SuppressLint("NonConstantResourceId")
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
+        Fragment selectedFragment = null;
 
-                    switch (item.getItemId()){
-                        case R.id.item1:
-                            selectedFragment = new HomeFragment();
-                            break;
-                        case R.id.item2:
-                            selectedFragment = new NewRecordFragment();
-                            break;
-                        case R.id.item3:
-                            selectedFragment = new ProfileFragment();
-                            break;
-                    }
+        switch (item.getItemId()){
+            case R.id.item1:
+                selectedFragment = new HomeFragment();
+                break;
+            case R.id.item2:
+                selectedFragment = new NewRecordFragment();
+                break;
+            case R.id.item3:
+                selectedFragment = new ProfileFragment();
+                break;
+        }
 
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_layout,selectedFragment)
-                            .commit();
-                    return true;
-                }
-            };
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_layout,selectedFragment)
+                .commit();
+        return true;
+    };
 
 
 }
