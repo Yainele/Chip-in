@@ -5,9 +5,14 @@
       <map>
         <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/activity_contacts_list.xml" value="0.33" />
         <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/activity_new_event.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/custom_dialog_for_add_amount.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/custom_dialog_for_payment.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/fragment_new_record.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/homegage.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/new_event_list_item.xml" value="0.75" />
         <entry key="..\:/Users/Serio/StudioProjects/Chip-in/app/src/main/res/layout/one_row_homepage.xml" value="0.36666666666666664" />
       </map>
     </option>
