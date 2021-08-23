@@ -25,9 +25,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class homePageAdapter extends RecyclerView.Adapter<homePageAdapter.ViewHolder> implements Filterable {
-    public homePageAdapter(ArrayList<Credit> creditsAd) {
-        CreditsAd = creditsAd;
+public class homePageAdapter extends FirestoreRecyclerAdapter<Credit ,homePageAdapter.ViewHolder> implements Filterable {
+    public homePageAdapter(@NonNull FirestoreRecyclerOptions<Credit> options) {
+        super(options);
     }
 
     ArrayList<Credit>CreditsAd;
@@ -41,9 +41,7 @@ public class homePageAdapter extends RecyclerView.Adapter<homePageAdapter.ViewHo
      *
    //  * @param options
      */
-    //public homePageAdapter(@NonNull FirestoreRecyclerOptions<Credit> options) {
-    //    super(options);
-    //}
+
     @Override
     public int getItemViewType(final int position) {
         return R.layout.fragment_home;
@@ -88,16 +86,20 @@ public class homePageAdapter extends RecyclerView.Adapter<homePageAdapter.ViewHo
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bindCredits(CreditsAd.get(position));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position,@NonNull Credit credit) {
+        holder.UserAvatar.setImageAlpha(credit.getUserAvatar());
+        if( holder.UserAvatar!=null){
+            holder.UserAvatar.setImageAlpha(R.drawable.ic_baseline_person_outline_24);
+        }
+        holder.CreditorName.setText(credit.getCreditorName());
+        holder.CreditTime.setText(credit.getCreditTime());
+        holder.Deadline.setText(credit.getDeadline());
+        holder.CreditName.setText(credit.getCreditName());
+        holder.Fullamount.setText(credit.getFullamount());
+        holder.MemberAmount.setText(credit.getMemberAmount());
         holder.itemView.setId(position);
     }
 
-
-    @Override
-    public int getItemCount() {
-        return CreditsAd.size();
-    }
 
     @Override
     public Filter getFilter() {
@@ -151,22 +153,8 @@ public class homePageAdapter extends RecyclerView.Adapter<homePageAdapter.ViewHo
 
         }
 
-        public void bindCredits(Credit credit) {
-
-            UserAvatar.setImageAlpha(credit.getUserAvatar());
-            if(UserAvatar!=null){
-                UserAvatar.setImageAlpha(R.drawable.ic_baseline_person_outline_24);
-            }
-            CreditorName.setText(credit.getCreditorName());
-            CreditTime.setText(credit.getCreditTime());
-            Deadline.setText(credit.getDeadline());
-            CreditName.setText(credit.getCreditName());
-            Fullamount.setText(credit.getFullamount());
-            MemberAmount.setText(credit.getMemberAmount());
-
-        }
     }
-    public  interface OnItemListener{
+    public  interface  OnItemListener{
         void OnItemClickListener(View view, int position);
         void OnItemLongClickListener(View view, int position);
     }

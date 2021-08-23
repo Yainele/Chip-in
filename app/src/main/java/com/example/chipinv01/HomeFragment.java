@@ -35,11 +35,13 @@ import recycleViewAdapters.homePageAdapter;
  */
 public class HomeFragment extends Fragment {
     RecyclerView homepageRecycle;
-    FirebaseUser userKey = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser firebaseUserID = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    Query queryChart = firebaseFirestore.collection("some");
+    Query queryChart = firebaseFirestore.collection(firebaseUserID.getUid());
     homePageAdapter homepageRecycleAdapter;
     Drawable defaultImage;
+
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -105,25 +107,32 @@ public class HomeFragment extends Fragment {
         credit.setFullamount("15000");
         ArrayList<Credit>Credits = new ArrayList<>();
         Credits.add(credit);
-        firebaseFirestore.collection("UserID").document(credit.getCreditName()).set(credit);
+        firebaseFirestore.collection(firebaseUserID.getUid()).document(credit.getCreditName()).set(credit);
         ////////////////
 
-
-        homepageRecycle = view.findViewById(R.id.chipsResycle);
-        homepageRecycle.setHasFixedSize(true);
-        homepageRecycle.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        homepageRecycleAdapter = new homePageAdapter(Credits);
-
-        homepageRecycle.setAdapter(homepageRecycleAdapter);
-
-    }
-    public void getDataFromFirebase(){
         FirestoreRecyclerOptions<Credit> options =
                 new FirestoreRecyclerOptions.Builder<Credit>()
                         .setQuery(queryChart, Credit.class)
                         .build();
-    //закончить после добавления регистрации
+        homepageRecycle = view.findViewById(R.id.chipsResycle);
+        homepageRecycle.setHasFixedSize(true);
+        homepageRecycle.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        homepageRecycleAdapter = new homePageAdapter(options);
+
+        homepageRecycle.setAdapter(homepageRecycleAdapter);
+
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        homepageRecycleAdapter.stopListening();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        homepageRecycleAdapter.startListening();
     }
 
     public void OnItemClickListener(View view, int position) {
