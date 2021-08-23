@@ -154,6 +154,9 @@ public class homePageAdapter extends RecyclerView.Adapter<homePageAdapter.ViewHo
         public void bindCredits(Credit credit) {
 
             UserAvatar.setImageAlpha(credit.getUserAvatar());
+            if(UserAvatar!=null){
+                UserAvatar.setImageAlpha(R.drawable.ic_baseline_person_outline_24);
+            }
             CreditorName.setText(credit.getCreditorName());
             CreditTime.setText(credit.getCreditTime());
             Deadline.setText(credit.getDeadline());

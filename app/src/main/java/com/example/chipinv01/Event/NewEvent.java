@@ -155,7 +155,7 @@ Button.setOnClickListener(new View.OnClickListener() {
             TotalAmountDialog.setMessage("Введите общую сумму,которая разделится на всех.");
             TotalAmountDialog.setView(totalAmount);
 
-            TotalAmountDialog.setPositiveButton("Продолжить", new DialogInterface.OnClickListener() {
+            TotalAmountDialog.setPositiveButton("Разделить на всех", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
               String T_A =  totalAmount.getText().toString();
@@ -172,10 +172,17 @@ Button.setOnClickListener(new View.OnClickListener() {
               }
                 }
             });
-            TotalAmountDialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+            TotalAmountDialog.setNeutralButton("Скинуться по", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String T_A =  totalAmount.getText().toString();
+                    T_A_var= Double.parseDouble(T_A);
+                    if(T_A_var!=null) {
+                        double AmountForEveryUser = (T_A_var);
+                        Intent intentForAdapter = new Intent(NewEvent.this,EventAdapter.class);
+                        intentForAdapter.putExtra("AmountForEveryUser",AmountForEveryUser);
+                        eventAdapter.setAmountForEveryUserValue(AmountForEveryUser);
+                    }
                 }
             });
             TotalAmountDialog.create().show();

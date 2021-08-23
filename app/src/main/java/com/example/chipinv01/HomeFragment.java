@@ -89,12 +89,12 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         Credit credit = new Credit();
-        credit.setCreditName("пусто");
-        credit.setCreditTime("99999");
+        credit.setCreditName("Сбор денег на шашлыки");
+        credit.setCreditTime("Вчера в 20:48");
         credit.setDeadline("30.02.2042");
-        credit.setCreditorName("пусто");
-        credit.setMemberAmount("0/0");
-        credit.setFullamount("9999999");
+        credit.setCreditorName("Коркачев Даниил");
+        credit.setMemberAmount("7");
+        credit.setFullamount("15000");
         ArrayList<Credit>Credits = new ArrayList<>();
 
 

@@ -8,8 +8,8 @@
     android:background="#4E4B4B">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="508dp"
-        android:layout_height="158dp"
+        android:layout_width="385dp"
+        android:layout_height="170dp"
         android:background="#5C4F4F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,103 +23,157 @@
 
             <TextView
                 android:id="@+id/memberAmountHomePage"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="372dp"
-                android:layout_marginLeft="372dp"
-                android:layout_marginTop="97dp"
-                android:layout_marginEnd="36dp"
-                android:layout_marginRight="36dp"
-                android:layout_marginBottom="16dp"
-                android:text="TextView"
+                android:layout_width="50dp"
+                android:layout_height="18dp"
+                android:text="memberAmount"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.426"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.875" />
 
             <ImageView
                 android:id="@+id/avatarHomePage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="11dp"
-                android:layout_marginEnd="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginBottom="7dp"
-                app:layout_constraintBottom_toTopOf="@+id/fullAmountHomePage"
-                app:layout_constraintEnd_toStartOf="@+id/creditNameHomePage"
+                android:layout_width="59dp"
+                android:layout_height="52dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/empty" />
+                app:layout_constraintVertical_bias="0.139"
+                app:srcCompat="@drawable/ic_baseline_person_outline_24"
+                tools:ignore="ExtraText,VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/credittimeHomePage"
-                android:layout_width="0dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="9dp"
-                android:layout_marginLeft="9dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="TextView"
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:text="date of creation"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/creditornameHomePage"
-                app:layout_constraintStart_toEndOf="@+id/avatarHomePage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.291"
                 tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/creditNameHomePage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:text="TextView"
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:text="Title"
                 android:textSize="21sp"
-                app:layout_constraintBottom_toTopOf="@+id/creditornameHomePage"
-                app:layout_constraintEnd_toStartOf="@+id/creditornameHomePage"
-                app:layout_constraintStart_toEndOf="@+id/avatarHomePage"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.052"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.503" />
 
             <TextView
                 android:id="@+id/creditornameHomePage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="118dp"
-                android:layout_marginRight="118dp"
-                android:layout_marginBottom="7dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/fullAmountHomePage"
+                android:layout_width="187dp"
+                android:layout_height="19dp"
+                android:text="Name"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/creditNameHomePage"
-                app:layout_constraintTop_toBottomOf="@+id/creditNameHomePage" />
+                app:layout_constraintHorizontal_bias="0.353"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.165" />
 
             <TextView
                 android:id="@+id/DeadlineHomePage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="165dp"
-                android:layout_marginRight="165dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/fullAmountHomePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deadline"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/fullAmountHomePage"
-                app:layout_constraintTop_toTopOf="@+id/fullAmountHomePage" />
+                app:layout_constraintHorizontal_bias="0.879"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.894" />
 
             <TextView
                 android:id="@+id/fullAmountHomePage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="128dp"
-                android:layout_marginLeft="128dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="16dp"
-                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="fullAmount"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/DeadlineHomePage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.022"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/creditornameHomePage" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.874" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.309"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.866" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.69"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.866" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="19dp"
+                android:layout_marginRight="19dp"
+                android:text="Общая сумма:"
+                app:layout_constraintBottom_toTopOf="@+id/fullAmountHomePage"
+                app:layout_constraintEnd_toStartOf="@+id/view2"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginEnd="56dp"
+                android:layout_marginRight="56dp"
+                android:text="Участников:"
+                app:layout_constraintBottom_toTopOf="@+id/memberAmountHomePage"
+                app:layout_constraintEnd_toStartOf="@+id/view"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/view2" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="47dp"
+                android:layout_marginRight="47dp"
+                android:text="Срок до:"
+                app:layout_constraintBottom_toTopOf="@+id/DeadlineHomePage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

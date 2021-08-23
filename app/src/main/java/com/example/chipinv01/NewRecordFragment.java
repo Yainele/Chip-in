@@ -43,6 +43,7 @@ public class NewRecordFragment extends Fragment {
     }
 
 
+    @SuppressLint("Range")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
