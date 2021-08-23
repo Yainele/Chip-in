@@ -97,116 +97,105 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.choosenConta
             bar.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {//добавление суммы
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION ){
-                            listener.OnItemClick(position);
+            //добавление суммы
+            itemView.setOnClickListener(v -> {
+                if(listener != null){
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION ){
+                        listener.OnItemClick(position);
 
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-                            @SuppressLint("ResourceType")View dialogView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.custom_dialog_for_add_amount,null);
-                            de.hdodenhof.circleimageview.CircleImageView dialogImageView = dialogView.findViewById(R.id.dialog_boxImage);
-                            builder.setView(dialogView);
-                            builder.setCancelable(true);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                        @SuppressLint("ResourceType")View dialogView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.custom_dialog_for_add_amount,null);
+                        de.hdodenhof.circleimageview.CircleImageView dialogImageView = dialogView.findViewById(R.id.dialog_boxImage);
+                        builder.setView(dialogView);
+                        builder.setCancelable(true);
 
-                            TextView dialog_boxUsername = dialogView.findViewById(R.id.dialog_boxUserName);
-                            TextView dialog_boxPhone = dialogView.findViewById(R.id.dialog_boxUserPhone);
-                            Button ContinueBtn = dialogView.findViewById(R.id.ContinueBtn);
-                            Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, ChoosenContacts.get(position).id);
-                            Uri imageUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-                            dialog_boxUsername.setText(ChoosenContacts.get(position).name);
-                            dialog_boxPhone.setText(ChoosenContacts.get(position).number);
-                            dialogImageView.setImageURI(imageUri);
+                        TextView dialog_boxUsername = dialogView.findViewById(R.id.dialog_boxUserName);
+                        TextView dialog_boxPhone = dialogView.findViewById(R.id.dialog_boxUserPhone);
+                        Button ContinueBtn = dialogView.findViewById(R.id.ContinueBtn);
+                        Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, ChoosenContacts.get(position).id);
+                        Uri imageUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+                        dialog_boxUsername.setText(ChoosenContacts.get(position).name);
+                        dialog_boxPhone.setText(ChoosenContacts.get(position).number);
+                        dialogImageView.setImageURI(imageUri);
 
-                            final AlertDialog AmountDialog = builder.show();
-                            final EditText AmountInput = dialogView.findViewById(R.id.dialog_UserAmountText);
-                            ContinueBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if(!AmountInput.getText().toString().isEmpty()){
-                                        try {
-                                            AmountForEveryUserValue = Integer.parseInt(AmountInput.getText().toString());
-                                            AmountForEveryUser.setText(AmountInput.getText().toString());
-                                            bar.setProgress(AmountForEveryUserValue);
-                                            ChoosenContacts.get(position).amount = Double.parseDouble(AmountInput.getText().toString());
+                        final AlertDialog AmountDialog = builder.show();
+                        final EditText AmountInput = dialogView.findViewById(R.id.dialog_UserAmountText);
+                        ContinueBtn.setOnClickListener(v1 -> {
+                            if(!AmountInput.getText().toString().isEmpty()){
+                                try {
+                                    AmountForEveryUserValue = Integer.parseInt(AmountInput.getText().toString());
+                                    AmountForEveryUser.setText(AmountInput.getText().toString());
+                                    bar.setProgress(AmountForEveryUserValue);
+                                    ChoosenContacts.get(position).amount = Double.parseDouble(AmountInput.getText().toString());
 
-                                            AmountDialog.cancel();
-
-                                        }
-                                        catch (Exception e){
-                                            Log.v("Error in onclick is :  ", "", e);
-                                        }
-                                    }
-                                    else{
-                                        AmountDialog.cancel();
-                                    }
-
+                                    AmountDialog.cancel();
 
                                 }
-                            });
-                        }
+                                catch (Exception e){
+                                    Log.v("Error in onclick is :  ", "", e);
+                                }
+                            }
+                            else{
+                                AmountDialog.cancel();
+                            }
+
+
+                        });
                     }
                 }
-
             });
-            payment.setOnClickListener(new View.OnClickListener() {//отнимание суммы
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.OnItemClick(position);
+            //отнимание суммы
+            payment.setOnClickListener(view -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.OnItemClick(position);
 
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(view.getRootView().getContext());
-                            @SuppressLint("ResourceType") View dialogView = LayoutInflater.from(view.getRootView().getContext()).inflate(R.layout.custom_dialog_for_add_amount, null);
-                            de.hdodenhof.circleimageview.CircleImageView dialogImageView = dialogView.findViewById(R.id.dialog_boxImage);
-                            builder.setView(dialogView);
-                            builder.setCancelable(true);
-                            ///////////оптимизировать элементы алертдиалога
-                            TextView dialog_boxUsername = dialogView.findViewById(R.id.dialog_boxUserName);
-                            TextView dialog_boxPhone = dialogView.findViewById(R.id.dialog_boxUserPhone);
-                            Button ContinueBtn = dialogView.findViewById(R.id.ContinueBtn);
-                            Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, ChoosenContacts.get(position).id);
-                            Uri imageUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-                            dialog_boxUsername.setText(ChoosenContacts.get(position).name);
-                            dialog_boxPhone.setText(ChoosenContacts.get(position).number);
-                            dialogImageView.setImageURI(imageUri);
-                            ///////////
-                            final AlertDialog AmountDialog = builder.show();
-                            final EditText AmountInput = dialogView.findViewById(R.id.dialog_UserAmountText);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getRootView().getContext());
+                        @SuppressLint("ResourceType") View dialogView = LayoutInflater.from(view.getRootView().getContext()).inflate(R.layout.custom_dialog_for_add_amount, null);
+                        de.hdodenhof.circleimageview.CircleImageView dialogImageView = dialogView.findViewById(R.id.dialog_boxImage);
+                        builder.setView(dialogView);
+                        builder.setCancelable(true);
+                        ///////////оптимизировать элементы алертдиалога
+                        TextView dialog_boxUsername = dialogView.findViewById(R.id.dialog_boxUserName);
+                        TextView dialog_boxPhone = dialogView.findViewById(R.id.dialog_boxUserPhone);
+                        Button ContinueBtn = dialogView.findViewById(R.id.ContinueBtn);
+                        Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, ChoosenContacts.get(position).id);
+                        Uri imageUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+                        dialog_boxUsername.setText(ChoosenContacts.get(position).name);
+                        dialog_boxPhone.setText(ChoosenContacts.get(position).number);
+                        dialogImageView.setImageURI(imageUri);
+                        ///////////
+                        final AlertDialog AmountDialog = builder.show();
+                        final EditText AmountInput = dialogView.findViewById(R.id.dialog_UserAmountText);
 
-                            Toast.makeText(view.getContext(), "Click!", Toast.LENGTH_SHORT).show();
-                            ContinueBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if(!AmountInput.getText().toString().isEmpty()) {
-                                        try {
+                        Toast.makeText(view.getContext(), "Click!", Toast.LENGTH_SHORT).show();
+                        ContinueBtn.setOnClickListener(v -> {
+                            if(!AmountInput.getText().toString().isEmpty()) {
+                                try {
 
-                                            String dif = AmountInput.getText().toString();
-                                            difVar = Integer.parseInt(dif);
-                                            newAmount = (int) (ChoosenContacts.get(position).amount - difVar);
-                                            String amI = String.valueOf(newAmount);
-                                            bar.setProgress(newAmount);
-                                            AmountForEveryUser.setText(amI);
-                                            ChoosenContacts.get(position).amount = Double.parseDouble(amI);
+                                    String dif = AmountInput.getText().toString();
+                                    difVar = Integer.parseInt(dif);
+                                    newAmount = (int) (ChoosenContacts.get(position).amount - difVar);
+                                    String amI = String.valueOf(newAmount);
+                                    bar.setProgress(newAmount);
+                                    AmountForEveryUser.setText(amI);
+                                    ChoosenContacts.get(position).amount = Double.parseDouble(amI);
 
-                                            AmountDialog.cancel();
-
-                                        }
-                                        catch (Exception e){
-                                            Log.v("Second on click :   ", "", e);
-                                        }
-                                    }
-                                    else{
-                                        AmountDialog.cancel();
-                                    }
-
+                                    AmountDialog.cancel();
 
                                 }
-                            });
-                        }
+                                catch (Exception e){
+                                    Log.v("Second on click :   ", "", e);
+                                }
+                            }
+                            else{
+                                AmountDialog.cancel();
+                            }
+
+
+                        });
                     }
                 }
             });
