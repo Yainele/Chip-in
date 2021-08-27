@@ -1,10 +1,13 @@
 package com.example.chipinv01;
 
+import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 
+import com.example.chipinv01.Event.Cardview_item_decor;
 import com.example.chipinv01.Event.Credit;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,13 +83,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,13 +93,15 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         initHomePageAdapter(view);
-
+        homepageRecycle.addItemDecoration(new Cardview_item_decor.SpacesItemDecoration(20));
         return view;
 
     }
     public void initHomePageAdapter(View view){
+
         //объект используется для тестов адаптера после подключения адаптера к базе данных удалить
-        Credit credit = new Credit();
+        /*
+         Credit credit = new Credit();
         credit.setCreditName("Сбор денег на шашлыки");
         credit.setCreditTime("Вчера в 20:48");
         credit.setDeadline("30.02.2042");
@@ -108,6 +111,8 @@ public class HomeFragment extends Fragment {
         ArrayList<Credit>Credits = new ArrayList<>();
         Credits.add(credit);
         firebaseFirestore.collection(firebaseUserID.getUid()).document(credit.getCreditName()).set(credit);
+         */
+
         ////////////////
 
         FirestoreRecyclerOptions<Credit> options =

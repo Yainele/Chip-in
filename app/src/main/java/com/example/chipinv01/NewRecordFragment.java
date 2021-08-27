@@ -138,7 +138,6 @@ public class NewRecordFragment extends Fragment {
             }
             public void goToAttract(View v)
             {
-
                 createEvent.putExtra("ChoosenContacts",ChooseContact );
                 startActivity(createEvent);
             }

@@ -14,10 +14,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:outlineProvider="background"
+        android:outlineAmbientShadowColor="#000000"
+        android:outlineSpotShadowColor="#000000"
+        android:elevation="1000dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#C1BEBE">
 
@@ -48,15 +52,15 @@
 
             <TextView
                 android:id="@+id/credittimeHomePage"
-                android:layout_width="106dp"
-                android:layout_height="wrap_content"
+                android:layout_width="308dp"
+                android:layout_height="15dp"
                 android:text="date of creation"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintHorizontal_bias="0.909"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.291"
+                app:layout_constraintVertical_bias="0.283"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -67,23 +71,22 @@
                 android:textSize="21sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.052"
+                app:layout_constraintHorizontal_bias="0.218"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.503" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/creditornameHomePage"
-                android:layout_width="187dp"
-                android:layout_height="19dp"
+                android:layout_width="261dp"
+                android:layout_height="18dp"
                 android:text="Name"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.353"
+                app:layout_constraintHorizontal_bias="0.564"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.165" />
+                app:layout_constraintVertical_bias="0.171" />
 
             <TextView
                 android:id="@+id/DeadlineHomePage"
@@ -92,7 +95,7 @@
                 android:text="Deadline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.879"
+                app:layout_constraintHorizontal_bias="0.924"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.894" />
@@ -165,14 +168,13 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="47dp"
-                android:layout_marginRight="47dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginLeft="64dp"
                 android:text="Срок до:"
-                app:layout_constraintBottom_toTopOf="@+id/DeadlineHomePage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/view" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.754" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

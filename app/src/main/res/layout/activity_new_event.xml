@@ -17,8 +17,10 @@
         android:background="#686868"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.339">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contactsRecycler"
@@ -106,15 +108,21 @@
         app:menu="@menu/new_event_menu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/SaveDataBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_baseline_save_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" /><![CDATA[
 
+
+
+    />
+
+]]>
 </androidx.constraintlayout.widget.ConstraintLayout>
