@@ -24,19 +24,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chipinv01.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.choosenContactsViewHolder> {
-    ArrayList<Data> ChoosenContacts = new ArrayList<>();
+public class NewEventAdapter extends RecyclerView.Adapter<NewEventAdapter.choosenContactsViewHolder> {
+    ArrayList<Member> ChoosenContacts = new ArrayList<>();
     static int AmountForEveryUserValue = -1;
     static int newAmount=0;
-    public void setChoosenContacts(ArrayList<Data> ChoosenContacts) {
+    public void setChoosenContacts(ArrayList<Member> ChoosenContacts) {
         this.ChoosenContacts = ChoosenContacts;
         notifyDataSetChanged();
     }
-    public ArrayList<Data> getChoosenContacts() {
+    public ArrayList<Member> getChoosenContacts() {
         return ChoosenContacts;
     }
 
@@ -48,7 +47,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.choosenConta
     }
     private OnItemClickListener mListener;
     public void setAmountForEveryUserValue(double AmountForEveryUserValue){
-        EventAdapter.AmountForEveryUserValue = (int) AmountForEveryUserValue;
+        NewEventAdapter.AmountForEveryUserValue = (int) AmountForEveryUserValue;
         notifyDataSetChanged();
         if (ChoosenContacts.size()!=0) {
             for (int i = 0; i < ChoosenContacts.size(); i++) {
@@ -74,7 +73,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.choosenConta
 
     @Override
     public int getItemCount() {
-        return ChoosenContacts.size();
+        try {
+            return ChoosenContacts.size();
+        }
+        catch (Exception e){
+
+        }
+        return 0;
     }
 
    public class choosenContactsViewHolder extends RecyclerView.ViewHolder{
@@ -202,7 +207,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.choosenConta
 
         }
 
-       public void bindContact(Data contact) {
+       public void bindContact(Member contact) {
 
             if(AmountForEveryUserValue != -1){
                 AmountForEveryUser.setText(String.valueOf(AmountForEveryUserValue));

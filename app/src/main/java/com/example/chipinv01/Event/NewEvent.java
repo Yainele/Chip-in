@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,11 +32,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.chipinv01.Homepage;
 import com.example.chipinv01.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 
 import java.text.DateFormat;
@@ -47,13 +52,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 
+import recycleViewAdapters.ExtendedEventAdapter;
+import recycleViewAdapters.homePageAdapter;
+
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class NewEvent extends AppCompatActivity {
 
     private RecyclerView choosenContactsList;
-    public ArrayList<Data>ContactsArray = new ArrayList<>();
+    public ArrayList<Member>ContactsArray = new ArrayList<>();
+    public ArrayList<Event>EventArray = new ArrayList<>();
     public ArrayList<String> NumberOfPhones = new ArrayList<>();
     int Checker = 0;
     Double T_A_var;
@@ -70,12 +82,16 @@ public class NewEvent extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
 
-    EventAdapter eventAdapter = new EventAdapter();
+
+    NewEventAdapter newEventAdapter = new NewEventAdapter();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
 
 
@@ -86,21 +102,40 @@ public class NewEvent extends AppCompatActivity {
 
         choosenContactsList.setLayoutManager(new LinearLayoutManager(this));
         choosenContactsList.addItemDecoration(new Cardview_item_decor.SpacesItemDecoration(10));
-        choosenContactsList.setAdapter(eventAdapter);
+        choosenContactsList.setAdapter(newEventAdapter);
         BottomNavigationView AfterContactMenu= findViewById(R.id.afterContact_menu);
         AfterContactMenu.setOnNavigationItemSelectedListener(navListener);
 
-        Bundle choosenContacts = getIntent().getExtras();
-        if (choosenContacts!=null){
+        FloatingActionButton SaveData= (FloatingActionButton) findViewById(R.id.SaveDataBtn);
 
-            ContactsArray = (ArrayList<Data>) choosenContacts.getSerializable("ChoosenContacts");
+        Bundle choosenContacts = getIntent().getExtras();
+        Bundle choosenEvent = getIntent().getExtras();
+        //приём данных при создания евента
+        if (choosenContacts.size()!=0){
+
+            ContactsArray = (ArrayList<Member>) choosenContacts.getSerializable("ChoosenContacts");
+            newEventAdapter.setChoosenContacts(ContactsArray);
 
         }
          else {
             Toast.makeText(NewEvent.this, "список контактов пуст", Toast.LENGTH_SHORT).show();
         }
-        eventAdapter.setChoosenContacts(ContactsArray);
-         eventAdapter.SetOnItemClickListener(new EventAdapter.OnItemClickListener() {
+         //приём данных если нажимаем по евенту в хоумпедж
+        try {
+            if (choosenEvent != null) {
+                Event event;
+                event = (Event) choosenEvent.getSerializable("ExtendedEvent");
+                if (event.Members != null) {
+                    SaveData.hide();
+                    newEventAdapter.setChoosenContacts(event.Members);
+                }
+            }
+        }
+        catch (Exception e){
+
+        }
+
+         newEventAdapter.SetOnItemClickListener(new NewEventAdapter.OnItemClickListener() {
              @Override
              public void OnItemClick(int position) {
 
@@ -129,7 +164,7 @@ public class NewEvent extends AppCompatActivity {
             }
         };
           */
-        FloatingActionButton SaveData= (FloatingActionButton) findViewById(R.id.SaveDataBtn);
+
         SaveData.setOnClickListener(new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
@@ -179,10 +214,10 @@ public class NewEvent extends AppCompatActivity {
               T_A_var= Double.parseDouble(T_A);
               if(T_A_var!=null) {
                   double AmountForEveryUser = (T_A_var / ContactsArray.size());
-                  Intent intentForAdapter = new Intent(NewEvent.this,EventAdapter.class);
+                  Intent intentForAdapter = new Intent(NewEvent.this, NewEventAdapter.class);
                   intentForAdapter.putExtra("AmountForEveryUser",AmountForEveryUser);
 
-                  eventAdapter.setAmountForEveryUserValue(AmountForEveryUser);
+                  newEventAdapter.setAmountForEveryUserValue(AmountForEveryUser);
               }
               else{
                   Toast.makeText(NewEvent.this,"Введите сумму",Toast.LENGTH_LONG).show();
@@ -196,9 +231,9 @@ public class NewEvent extends AppCompatActivity {
                     T_A_var= Double.parseDouble(T_A);
                     if(T_A_var!=null) {
                         double AmountForEveryUser = (T_A_var);
-                        Intent intentForAdapter = new Intent(NewEvent.this,EventAdapter.class);
+                        Intent intentForAdapter = new Intent(NewEvent.this, NewEventAdapter.class);
                         intentForAdapter.putExtra("AmountForEveryUser",AmountForEveryUser);
-                        eventAdapter.setAmountForEveryUserValue(AmountForEveryUser);
+                        newEventAdapter.setAmountForEveryUserValue(AmountForEveryUser);
                     }
                 }
             });
@@ -320,7 +355,7 @@ public class NewEvent extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             switch (getResultCode()) {
                 case Activity.RESULT_OK:
-                    Toast.makeText(context, "Sented", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Send", Toast.LENGTH_LONG).show();
                     break;
                 default:
                     Toast.makeText(context, "Error S", Toast.LENGTH_LONG).show();
@@ -381,21 +416,82 @@ public class NewEvent extends AppCompatActivity {
     }
 
     Date date = new Date();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.YY HH:mm");
+    @SuppressLint({"NewApi", "SimpleDateFormat"})
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.y.HH:mm");
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void dataSender(){
         //Доделать полную сумму
-        Credit credit = new Credit();
-        credit.setCreditName(CreditNameStr);
-        credit.setCreditTime(dateFormat.format(date));
-        credit.setDeadline(DateOfDL);
-        credit.setCreditorName(getUsername());
-        credit.setMemberAmount(String.valueOf(ContactsArray.size()));
-        credit.setFullamount("No Value");
-        ArrayList<Credit>Credits = new ArrayList<>();
-        Credits.add(credit);
-        firebaseFirestore.collection(firebaseUserID.getUid()).add(credit);
+
+        CollectionReference collectionReference = firebaseFirestore.collection(firebaseUserID.getUid());
+        Event event = new Event();
+        event.setCreditName(CreditNameStr);
+        event.setCreditTime(dateFormat.format(date));
+        event.setDeadline(DateOfDL);
+        event.setCreditorName(getUsername());
+        event.setMemberAmount(String.valueOf(ContactsArray.size()));
+        event.setFullamount("No Value");
+        event.setUniqueId(generatePushId());
+        event.setMembers(ContactsArray);
+        //firebaseFirestore.collection(firebaseUserID.getUid()).add(event);
+        firebaseFirestore.collection(firebaseUserID.getUid()).document(event.getUniqueId()).set(event);
+
+
     }
+        // Modeled after base64 web-safe chars, but ordered by ASCII.
+        private final static String PUSH_CHARS = "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+
+        public String generatePushId() {
+            // Timestamp of last push, used to prevent local collisions if you push twice in one ms.
+            long lastPushTime = 0L;
+
+            // We generate 72-bits of randomness which get turned into 12 characters and
+            // appended to the timestamp to prevent collisions with other clients. We store the last
+            // characters we generated because in the event of a collision, we'll use those same
+            // characters except "incremented" by one.
+            char[] lastRandChars = new char[72];
+
+            long now = new Date().getTime();
+
+            boolean duplicateTime = (now == lastPushTime);
+
+            char[] timeStampChars = new char[8];
+            for (int i = 7; i >= 0; i--) {
+                final long module = now % 64;
+                timeStampChars[i] = PUSH_CHARS.charAt(Long.valueOf(module).intValue());
+                now = (long) Math.floor(now / 64);
+            }
+            if (now != 0)
+                throw new AssertionError("We should have converted the entire timestamp.");
+
+            String id = new String(timeStampChars);
+            if (!duplicateTime) {
+                for (int i = 0; i < 12; i++) {
+                    final double times = Math.random() * 64;
+                    lastRandChars[i] = (char) Math.floor(Double.valueOf(times).intValue());
+
+                }
+            } else {
+                // If the timestamp hasn't changed since last push, use the same random number,
+                //except incremented by 1.
+                int lastValueOfInt=0;
+                for (int i = 11; i >= 0 && lastRandChars[i] == 63; i--) {
+                    lastValueOfInt = i;
+                    lastRandChars[i] = 0;
+                }
+                lastRandChars[lastValueOfInt]++;
+            }
+            for (int i = 0; i < 12; i++) {
+                id += PUSH_CHARS.charAt(lastRandChars[i]);
+            }
+            if (id.length() != 20)
+                throw new AssertionError("Length should be 20.");
+
+            return id;
+        };
+
+
+
+
 }

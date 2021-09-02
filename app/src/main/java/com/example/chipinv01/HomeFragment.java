@@ -1,35 +1,34 @@
 package com.example.chipinv01;
 
-import android.graphics.Outline;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 
 import com.example.chipinv01.Event.Cardview_item_decor;
-import com.example.chipinv01.Event.Credit;
+import com.example.chipinv01.Event.ContactsAdapter;
+import com.example.chipinv01.Event.Event;
+import com.example.chipinv01.Event.NewEvent;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.io.Serializable;
 
 import recycleViewAdapters.homePageAdapter;
 
@@ -45,6 +44,7 @@ public class HomeFragment extends Fragment {
     Query queryChart = firebaseFirestore.collection(firebaseUserID.getUid());
     homePageAdapter homepageRecycleAdapter;
     Drawable defaultImage;
+    Event ExtendedEvent;
 
 
 
@@ -93,38 +93,52 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         initHomePageAdapter(view);
+        homepageRecycleAdapter.setOnItemListenerListener(new homePageAdapter.OnItemListener() {
+            @Override
+            public void OnItemClickListener(View view, int position) {
+                homepageRecycleAdapter.getItem(position);
+                initNewExtendedAdapter(position);
+                if (ExtendedEvent != null){
+                    Intent ExtendedEventIntent = new Intent(getActivity(), NewEvent.class);
+                    ExtendedEventIntent.putExtra("ExtendedEvent", String.valueOf(ExtendedEvent));
+                    startActivity(ExtendedEventIntent);
+
+                }
+            }
+
+            @Override
+            public void OnItemLongClickListener(View view, int position) {
+
+            }
+        });
         homepageRecycle.addItemDecoration(new Cardview_item_decor.SpacesItemDecoration(20));
         return view;
 
     }
     public void initHomePageAdapter(View view){
-
-        //объект используется для тестов адаптера после подключения адаптера к базе данных удалить
-        /*
-         Credit credit = new Credit();
-        credit.setCreditName("Сбор денег на шашлыки");
-        credit.setCreditTime("Вчера в 20:48");
-        credit.setDeadline("30.02.2042");
-        credit.setCreditorName("Коркачев Даниил");
-        credit.setMemberAmount("7");
-        credit.setFullamount("15000");
-        ArrayList<Credit>Credits = new ArrayList<>();
-        Credits.add(credit);
-        firebaseFirestore.collection(firebaseUserID.getUid()).document(credit.getCreditName()).set(credit);
-         */
-
-        ////////////////
-
-        FirestoreRecyclerOptions<Credit> options =
-                new FirestoreRecyclerOptions.Builder<Credit>()
-                        .setQuery(queryChart, Credit.class)
+        FirestoreRecyclerOptions<Event> options =
+                new FirestoreRecyclerOptions.Builder<Event>()
+                        .setQuery(queryChart, Event.class)
                         .build();
         homepageRecycle = view.findViewById(R.id.chipsResycle);
         homepageRecycle.setHasFixedSize(true);
         homepageRecycle.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         homepageRecycleAdapter = new homePageAdapter(options);
+        homepageRecycleAdapter.setOnItemListenerListener(new homePageAdapter.OnItemListener() {
+            @Override
+            public void OnItemClickListener(View view, int position) {
+                Intent NewEventIntent = new Intent(view.getContext(), Homepage.class);
+                Event event = homepageRecycleAdapter.getItem(position);
+                startActivity(NewEventIntent);
 
+            }
+
+            @Override
+            public void OnItemLongClickListener(View view, int position) {
+
+            }
+        });
         homepageRecycle.setAdapter(homepageRecycleAdapter);
 
     }
@@ -140,9 +154,18 @@ public class HomeFragment extends Fragment {
         homepageRecycleAdapter.startListening();
     }
 
-    public void OnItemClickListener(View view, int position) {
-    }
-    public void OnItemLongClickListener(View view, int position) {
 
+    public void initNewExtendedAdapter(int position){
+        DocumentReference documentReference = firebaseFirestore.collection(firebaseUserID.getUid()).
+                document(
+                        String.valueOf(homepageRecycleAdapter.getItem(position).getUniqueId())
+        );
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ExtendedEvent = documentSnapshot.toObject(Event.class);
+
+            }
+        });
     }
 }

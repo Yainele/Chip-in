@@ -11,27 +11,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.chipinv01.Event.Credit;
+import com.example.chipinv01.Event.Event;
 import com.example.chipinv01.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-public class homePageAdapter extends FirestoreRecyclerAdapter<Credit ,homePageAdapter.ViewHolder> implements Filterable {
-    public homePageAdapter(@NonNull FirestoreRecyclerOptions<Credit> options) {
+public class homePageAdapter extends FirestoreRecyclerAdapter<Event,homePageAdapter.ViewHolder> implements Filterable {
+
+    public homePageAdapter(@NonNull FirestoreRecyclerOptions<Event> options) {
         super(options);
     }
 
-    ArrayList<Credit>CreditsAd;
-    List<Credit>CreditsFull;
+    ArrayList<Event> creditsAd;
+    List<Event> creditsFull;
     private homePageAdapter.OnItemListener onItemListener;
 
 
@@ -47,28 +44,28 @@ public class homePageAdapter extends FirestoreRecyclerAdapter<Credit ,homePageAd
         return R.layout.fragment_home;
     }
     @SuppressLint("NotifyDataSetChanged")
-    public void setCredits(ArrayList<Credit> Credits) {
+    public void setCredits(ArrayList<Event> events) {
 
-        CreditsAd = new ArrayList<>();
-        if (Credits.size() == 0){
-            Credit credit = new Credit();
-            credit.setCreditName("пусто");
-            credit.setCreditTime("99999");
-            credit.setDeadline("30.02.2042");
-            credit.setCreditorName("пусто");
-            credit.setMemberAmount("0/0");
-            credit.setFullamount("9999999");
-            credit.setUserAvatar(R.drawable.ic_baseline_check_circle_24);
-            Credits.add(credit);
+        creditsAd = new ArrayList<>();
+        if (events.size() == 0){
+            Event event = new Event();
+            event.setCreditName("пусто");
+            event.setCreditTime("99999");
+            event.setDeadline("30.02.2042");
+            event.setCreditorName("пусто");
+            event.setMemberAmount("0/0");
+            event.setFullamount("9999999");
+            event.setUserAvatar(R.drawable.ic_baseline_check_circle_24);
+            events.add(event);
 
         }
         else {
-            for (Credit item : Credits){
-                CreditsAd.add(item);
+            for (Event item : events){
+                creditsAd.add(item);
             };
         }
-        CreditsFull = new ArrayList<>(
-                Credits
+        creditsFull = new ArrayList<>(
+                events
         );
         notifyDataSetChanged();
     }
@@ -86,17 +83,17 @@ public class homePageAdapter extends FirestoreRecyclerAdapter<Credit ,homePageAd
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position,@NonNull Credit credit) {
-        holder.UserAvatar.setImageAlpha(credit.getUserAvatar());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position,@NonNull Event event) {
+        holder.UserAvatar.setImageAlpha(event.getUserAvatar());
         if( holder.UserAvatar!=null){
             holder.UserAvatar.setImageAlpha(R.drawable.ic_baseline_person_outline_24);
         }
-        holder.CreditorName.setText(credit.getCreditorName());
-        holder.CreditTime.setText(credit.getCreditTime());
-        holder.Deadline.setText(credit.getDeadline());
-        holder.CreditName.setText(credit.getCreditName());
-        holder.Fullamount.setText(credit.getFullamount());
-        holder.MemberAmount.setText(credit.getMemberAmount());
+        holder.CreditorName.setText(event.getCreditorName());
+        holder.CreditTime.setText(event.getCreditTime());
+        holder.Deadline.setText(event.getDeadline());
+        holder.CreditName.setText(event.getCreditName());
+        holder.Fullamount.setText(event.getFullamount());
+        holder.MemberAmount.setText(event.getMemberAmount());
         holder.itemView.setId(position);
     }
 
@@ -108,13 +105,13 @@ public class homePageAdapter extends FirestoreRecyclerAdapter<Credit ,homePageAd
     private Filter ContactFlter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Credit>FilterderContactsList = new ArrayList<>();
+            List<Event>FilterderContactsList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0){
-                FilterderContactsList.addAll(CreditsFull);
+                FilterderContactsList.addAll(creditsFull);
             }
             else {
                 String FilterPattern = constraint.toString().toLowerCase().trim();
-                for (Credit item: CreditsFull ){
+                for (Event item: creditsFull){
                     if (item.getCreditName().toLowerCase().contains(FilterPattern)){
                         FilterderContactsList.add(item);
                     }
@@ -128,8 +125,8 @@ public class homePageAdapter extends FirestoreRecyclerAdapter<Credit ,homePageAd
         @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            CreditsAd.clear();
-            CreditsAd.addAll((List)results.values);
+            creditsAd.clear();
+            creditsAd.addAll((List)results.values);
             notifyDataSetChanged();
         }
     };

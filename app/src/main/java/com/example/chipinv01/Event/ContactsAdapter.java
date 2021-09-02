@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> implements Filterable {
-    List<Data> Contacts;
-    List<Data>ContactsFull;
+    List<Member> Contacts;
+    List<Member>ContactsFull;
     private ContactsAdapter.OnItemListener onItemListener;
 
-    public void setContacts(List<Data> Contacts) {
+    public void setContacts(List<Member> Contacts) {
         this.Contacts = Contacts;
         ContactsFull = new ArrayList<>(
                 Contacts
@@ -62,13 +62,13 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     private Filter ContactFlter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Data>FilterderContactsList = new ArrayList<>();
+            List<Member>FilterderContactsList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0){
                 FilterderContactsList.addAll(ContactsFull);
             }
             else {
                 String FilterPattern = constraint.toString().toLowerCase().trim();
-                for (Data item: ContactsFull ){
+                for (Member item: ContactsFull ){
                     if (item.name.toLowerCase().contains(FilterPattern)){
                         FilterderContactsList.add(item);
                     }
@@ -98,7 +98,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             ContactAvatar = itemView.findViewById(R.id.ContactAvatar);
         }
 
-        public void bindContact(Data contact) {
+        public void bindContact(Member contact) {
             ContactName.setText(contact.name);
             ContactNumber.setText(contact.number);
             Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id);

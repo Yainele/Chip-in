@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.chipinv01.Event.Cardview_item_decor;
-import com.example.chipinv01.Event.Data;
+import com.example.chipinv01.Event.Member;
 import com.example.chipinv01.Event.ContactsAdapter;
 import com.example.chipinv01.Event.NewEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,9 +31,9 @@ public class NewRecordFragment extends Fragment {
     com.example.chipinv01.Event.ContactsAdapter ContactsAdapter;
     ContentResolver contentResolver;
     String phone = "";
-    ArrayList<Data> ChooseContact = new ArrayList<>();
+    ArrayList<Member> ChooseContact = new ArrayList<>();
     ArrayList<ImageView>Avatars = new ArrayList<>();
-    ArrayList<Data>contacts = new ArrayList<>();
+    ArrayList<Member>contacts = new ArrayList<>();
     FloatingActionButton choosenContactButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class NewRecordFragment extends Fragment {
                     phone = "No number";
                 }
                 long imageId = cursor.getLong(3);
-                Data contact = new Data(name, phone,imageId,id);
+                Member contact = new Member(name, phone,imageId,id);
                 contacts.add(contact);
             }while (cursor.moveToNext());
         }

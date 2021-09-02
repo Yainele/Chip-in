@@ -4,9 +4,30 @@ import android.net.Uri;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Credit {
+import java.util.ArrayList;
+
+public class Event {
     String CreditorName, CreditTime, Deadline, CreditName, Fullamount, MemberAmount;
     int UserAvatar;
+    private String UniqueId;
+
+    public String getUniqueId() {
+        return UniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        UniqueId = uniqueId;
+    }
+
+    ArrayList<Member>Members;
+
+    public ArrayList<Member> getMembers() {
+        return Members;
+    }
+
+    public void setMembers(ArrayList<Member> members) {
+        Members = members;
+    }
 
     public String getCreditorName() {
         return CreditorName;
